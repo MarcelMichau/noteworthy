@@ -5,7 +5,7 @@ const login = () => {
 	const url = 'https://accounts.spotify.com/authorize';
 	const clientId = '4b5e3eb3d3d643daa7f8bfd21f074eda';
 
-	window.location = `${url}?client_id=${clientId}&response_type=token&redirect_uri=http://localhost:3000&scope=user-library-read user-read-currently-playing user-modify-playback-state`;
+	window.location = `${url}?client_id=${clientId}&response_type=token&redirect_uri=https://marcelmichau.github.io/spotiview&scope=user-library-read user-read-currently-playing user-modify-playback-state`;
 };
 
 const logout = setIsAuthorized => {
