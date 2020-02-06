@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "45988173b11cb17776d2ac537c672d6b",
+    "revision": "40b2b54f6a02961770480988dd99f2bb",
     "url": "/spotiview/index.html"
   },
   {
-    "revision": "f8e84cdf104e3dc772c5",
+    "revision": "bbeb8ea8295e1166b91b",
     "url": "/spotiview/static/css/main.152b8c17.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/spotiview/static/js/2.3bad37ce.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f8e84cdf104e3dc772c5",
-    "url": "/spotiview/static/js/main.51750de1.chunk.js"
+    "revision": "bbeb8ea8295e1166b91b",
+    "url": "/spotiview/static/js/main.6026951d.chunk.js"
   },
   {
     "revision": "cdab0ac9f6853c64a5b7",
