@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d46e71573a4c980650370e2610328b69",
+    "revision": "45988173b11cb17776d2ac537c672d6b",
     "url": "/spotiview/index.html"
   },
   {
