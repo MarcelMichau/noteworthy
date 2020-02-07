@@ -10,8 +10,6 @@ import {
 import MainMenuBar from './MainMenuBar';
 import Stage from './Stage';
 import {
-	Sidebar,
-	Menu,
 	Segment,
 	Button,
 	Icon,
@@ -105,7 +103,11 @@ function App() {
 					await localforage.setItem(track.track.id, track.track);
 				});
 
-				setUserTracks(tracks.map(track => track.track));
+				setUserTracks(
+					tracks
+						.map(track => track.track)
+						.sort((x, y) => x.artists[0].name.localeCompare(y.artists[0].name))
+				);
 			}
 			setLoading(false);
 		}
