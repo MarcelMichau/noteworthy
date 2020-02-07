@@ -8,7 +8,7 @@ const MainMenuBar = ({
 	onLogin,
 	onLogout
 }) => (
-	<Menu inverted>
+	<Menu inverted fixed="top">
 		<Menu.Item header active color="green">
 			Spotiview
 		</Menu.Item>

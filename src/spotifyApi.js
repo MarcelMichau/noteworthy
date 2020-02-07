@@ -3,7 +3,7 @@ export const login = () => {
 	const clientId = '4b5e3eb3d3d643daa7f8bfd21f074eda';
 
 	const redirectUri =
-		window.location.hostname === 'https://marcelmichau.github.io'
+		window.location.hostname === 'marcelmichau.github.io'
 			? 'https://marcelmichau.github.io/spotiview'
 			: 'http://localhost:3000';
 
