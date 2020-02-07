@@ -10,7 +10,7 @@ const MainMenuBar = ({
 }) => (
 	<Menu inverted fixed="top">
 		<Menu.Item header active color="green">
-			Spotiview
+			noteworthy for Spotify
 		</Menu.Item>
 
 		<Menu.Menu position="right">

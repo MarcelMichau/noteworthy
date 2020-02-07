@@ -4,7 +4,7 @@ export const login = () => {
 
 	const redirectUri =
 		window.location.hostname === 'marcelmichau.github.io'
-			? 'https://marcelmichau.github.io/spotiview'
+			? 'https://marcelmichau.github.io/noteworthy'
 			: 'http://localhost:3000';
 
 	window.location = `${url}?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=user-library-read user-read-currently-playing user-modify-playback-state`;

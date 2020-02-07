@@ -1,5 +1,5 @@
 {
-	"name": "spotiview",
+	"name": "noteworthy",
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
@@ -36,5 +36,5 @@
 			"last 1 safari version"
 		]
 	},
-	"homepage": "https://marcelmichau.github.io/spotiview"
+	"homepage": "https://marcelmichau.github.io/noteworthy"
 }

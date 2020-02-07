@@ -23,7 +23,7 @@ const authCallback = () => {
 	localStorage.setItem('access_token', result['access_token']);
 
 	if (window.location.hostname === 'marcelmichau.github.io') {
-		window.location.href = `${window.location.origin}/spotiview`;
+		window.location.href = `${window.location.origin}/noteworthy`;
 	} else {
 		window.location.href = window.location.origin;
 	}
