@@ -39,7 +39,7 @@ export const getUserDetail = async () => {
 export const getUserTracks = async () => {
 	console.log('get user artists called');
 
-	const url = 'https://api.spotify.com/v1/me/tracks?limit=50';
+	let url = 'https://api.spotify.com/v1/me/tracks?limit=50';
 
 	const accessToken = localStorage.getItem('access_token');
 
@@ -49,11 +49,31 @@ export const getUserTracks = async () => {
 		}
 	});
 
-	const data = await response.json();
+	let data = await response.json();
 
-	console.log(data);
+	url = data.next;
 
-	return data;
+	console.log('next url', url);
+
+	let tracks = data.items;
+
+	while (url !== null) {
+		const response = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			}
+		});
+
+		const data = await response.json();
+
+		tracks = tracks.concat(data.items);
+
+		url = data.next;
+
+		console.log('next url', url);
+	}
+
+	return tracks;
 };
 
 export const getCurrentlyPlaying = async () => {

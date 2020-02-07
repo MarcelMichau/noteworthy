@@ -8,7 +8,18 @@ import {
 	setPlayingTrack
 } from './spotifyApi';
 import MainMenuBar from './MainMenuBar';
-import { Button, Icon } from 'semantic-ui-react';
+import Stage from './Stage';
+import {
+	Sidebar,
+	Menu,
+	Segment,
+	Button,
+	Icon,
+	Table,
+	Dimmer,
+	Loader
+} from 'semantic-ui-react';
+import localforage from 'localforage';
 
 const authCallback = () => {
 	let hash = window.location.hash.substr(1);
@@ -43,6 +54,8 @@ function App() {
 
 	const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
+	const [isLoading, setLoading] = useState(false);
+
 	useEffect(() => {
 		if (window.location.hash) {
 			setIsAuthorized(authCallback());
@@ -69,15 +82,39 @@ function App() {
 
 	useEffect(() => {
 		async function fetchUserTracks() {
-			const result = await getUserTracks();
-			setUserTracks(result);
+			setLoading(true);
+
+			const numberOfKeys = await localforage.length();
+
+			if (numberOfKeys > 0) {
+				let localTracks = [];
+
+				await localforage.iterate((value, key, iterationNumber) => {
+					localTracks = localTracks.concat(value);
+				});
+
+				localTracks = localTracks.sort((x, y) =>
+					x.artists[0].name.localeCompare(y.artists[0].name)
+				);
+
+				setUserTracks(localTracks);
+			} else {
+				const tracks = await getUserTracks();
+
+				tracks.forEach(async track => {
+					await localforage.setItem(track.track.id, track.track);
+				});
+
+				setUserTracks(tracks.map(track => track.track));
+			}
+			setLoading(false);
 		}
 
 		if (isAuthorized) fetchUserTracks();
 	}, [isAuthorized]);
 
 	return (
-		<div>
+		<>
 			<MainMenuBar
 				isAuthorized={isAuthorized}
 				userData={userData}
@@ -85,33 +122,57 @@ function App() {
 				onLogin={login}
 				onLogout={() => logout(setIsAuthorized)}
 			></MainMenuBar>
-			{isAuthorized && (
-				<div>
-					{userTracks.items.length > 0 && (
-						<div>
-							<h2>Recent Tracks</h2>
-							{userTracks.items.map(item => (
-								<div key={item.track.id}>
-									<p>
-										<Button
-											onClick={async () => {
-												await setPlayingTrack(item.track);
-
-												const result = await getCurrentlyPlaying();
-												setCurrentlyPlaying(result);
-											}}
-										>
-											<Icon name="play" />
-										</Button>
-										{item.track.artists[0].name} - {item.track.name}:{' '}
-									</p>
-								</div>
-							))}
-						</div>
-					)}
-				</div>
+			{isLoading && (
+				<Dimmer active inverted>
+					<Loader inverted>Loading Tracks...</Loader>
+				</Dimmer>
 			)}
-		</div>
+			<Segment basic>
+				{isAuthorized && (
+					<Stage>
+						{userTracks.length > 0 && (
+							<div>
+								<h2>Total Tracks: {userTracks.length}</h2>
+								<Table celled>
+									<Table.Header>
+										<Table.Row>
+											<Table.HeaderCell></Table.HeaderCell>
+											<Table.HeaderCell>Artists</Table.HeaderCell>
+											<Table.HeaderCell>Track Name</Table.HeaderCell>
+											<Table.HeaderCell>Album</Table.HeaderCell>
+										</Table.Row>
+									</Table.Header>
+									<Table.Body>
+										{userTracks.map(track => (
+											<Table.Row key={track.id}>
+												<Table.Cell>
+													<Button
+														primary
+														onClick={async () => {
+															await setPlayingTrack(track);
+
+															const result = await getCurrentlyPlaying();
+															setCurrentlyPlaying(result);
+														}}
+													>
+														<Icon name="play" /> Play
+													</Button>
+												</Table.Cell>
+												<Table.Cell>
+													{track.artists.map(artist => artist.name).join(', ')}
+												</Table.Cell>
+												<Table.Cell>{track.name}</Table.Cell>
+												<Table.Cell>{track.album.name}</Table.Cell>
+											</Table.Row>
+										))}
+									</Table.Body>
+								</Table>
+							</div>
+						)}
+					</Stage>
+				)}
+			</Segment>
+		</>
 	);
 }
 
