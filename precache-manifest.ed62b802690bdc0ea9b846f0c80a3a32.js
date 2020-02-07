@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3f7addf48714f0eaeaf7931a827d5f03",
+    "revision": "0b0504c7881592a40c04009f8a0082a3",
     "url": "/noteworthy/index.html"
   },
   {
-    "revision": "0417b34b16acb8e877e8",
-    "url": "/noteworthy/static/css/2.4f5bb317.chunk.css"
+    "revision": "fa098e4159be6d57a551",
+    "url": "/noteworthy/static/css/2.a383367c.chunk.css"
   },
   {
-    "revision": "0417b34b16acb8e877e8",
-    "url": "/noteworthy/static/js/2.aae50978.chunk.js"
+    "revision": "fa098e4159be6d57a551",
+    "url": "/noteworthy/static/js/2.60b91236.chunk.js"
   },
   {
-    "revision": "967c3aa677d48917bda81b3b2ff2693c",
-    "url": "/noteworthy/static/js/2.aae50978.chunk.js.LICENSE.txt"
+    "revision": "c8b26845aa9d86bccea9e3031348dd0d",
+    "url": "/noteworthy/static/js/2.60b91236.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "b9957cde1e92bb0c5d07",
-    "url": "/noteworthy/static/js/main.69541767.chunk.js"
+    "revision": "0a6fc9535b8670a93a49",
+    "url": "/noteworthy/static/js/main.f06f4682.chunk.js"
   },
   {
     "revision": "305a0fb383f8b978c498",
