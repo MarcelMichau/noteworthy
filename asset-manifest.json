@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/spotiview/static/js/main.65d4f99e.chunk.js",
-    "main.js.map": "/spotiview/static/js/main.65d4f99e.chunk.js.map",
-    "runtime-main.js": "/spotiview/static/js/runtime-main.495e99d4.js",
-    "runtime-main.js.map": "/spotiview/static/js/runtime-main.495e99d4.js.map",
-    "static/css/2.1f2d4562.chunk.css": "/spotiview/static/css/2.1f2d4562.chunk.css",
-    "static/js/2.175115f4.chunk.js": "/spotiview/static/js/2.175115f4.chunk.js",
-    "static/js/2.175115f4.chunk.js.map": "/spotiview/static/js/2.175115f4.chunk.js.map",
-    "index.html": "/spotiview/index.html",
-    "precache-manifest.b37f93e8c49c6040c02f24990754a96f.js": "/spotiview/precache-manifest.b37f93e8c49c6040c02f24990754a96f.js",
-    "service-worker.js": "/spotiview/service-worker.js",
-    "static/css/2.1f2d4562.chunk.css.map": "/spotiview/static/css/2.1f2d4562.chunk.css.map",
-    "static/js/2.175115f4.chunk.js.LICENSE.txt": "/spotiview/static/js/2.175115f4.chunk.js.LICENSE.txt",
-    "static/media/semantic.min.css": "/spotiview/static/media/outline-icons.ef60a4f6.woff"
+    "main.js": "/noteworthy/static/js/main.1aed42cc.chunk.js",
+    "main.js.map": "/noteworthy/static/js/main.1aed42cc.chunk.js.map",
+    "runtime-main.js": "/noteworthy/static/js/runtime-main.a1326f64.js",
+    "runtime-main.js.map": "/noteworthy/static/js/runtime-main.a1326f64.js.map",
+    "static/css/2.4f5bb317.chunk.css": "/noteworthy/static/css/2.4f5bb317.chunk.css",
+    "static/js/2.e2f4cdf5.chunk.js": "/noteworthy/static/js/2.e2f4cdf5.chunk.js",
+    "static/js/2.e2f4cdf5.chunk.js.map": "/noteworthy/static/js/2.e2f4cdf5.chunk.js.map",
+    "index.html": "/noteworthy/index.html",
+    "precache-manifest.ab06951dd013d7404e0120046a2a52bb.js": "/noteworthy/precache-manifest.ab06951dd013d7404e0120046a2a52bb.js",
+    "service-worker.js": "/noteworthy/service-worker.js",
+    "static/css/2.4f5bb317.chunk.css.map": "/noteworthy/static/css/2.4f5bb317.chunk.css.map",
+    "static/js/2.e2f4cdf5.chunk.js.LICENSE.txt": "/noteworthy/static/js/2.e2f4cdf5.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/noteworthy/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.495e99d4.js",
-    "static/css/2.1f2d4562.chunk.css",
-    "static/js/2.175115f4.chunk.js",
-    "static/js/main.65d4f99e.chunk.js"
+    "static/js/runtime-main.a1326f64.js",
+    "static/css/2.4f5bb317.chunk.css",
+    "static/js/2.e2f4cdf5.chunk.js",
+    "static/js/main.1aed42cc.chunk.js"
   ]
 }
