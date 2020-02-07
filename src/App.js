@@ -9,14 +9,7 @@ import {
 } from './spotifyApi';
 import MainMenuBar from './MainMenuBar';
 import Stage from './Stage';
-import {
-	Segment,
-	Button,
-	Icon,
-	Table,
-	Dimmer,
-	Loader
-} from 'semantic-ui-react';
+import { Grid, Segment, Icon, Dimmer, Loader } from 'semantic-ui-react';
 import localforage from 'localforage';
 import { groupBy } from 'lodash';
 
@@ -50,8 +43,11 @@ const massageTracks = tracks => {
 	const groupedByArtist = groupBy(sortedTracks, value => value.artists[0].name);
 
 	Object.keys(groupedByArtist).forEach(artist => {
-		groupedByArtist[artist] = groupedByArtist[artist].sort((x, y) =>
-			x.album.name.localeCompare(y.album.name)
+		groupedByArtist[artist] = groupBy(
+			groupedByArtist[artist].sort((x, y) =>
+				x.album.name.localeCompare(y.album.name)
+			),
+			value => value.album.name
 		);
 	});
 
@@ -116,11 +112,7 @@ function App() {
 					await localforage.setItem(track.track.id, track.track);
 				});
 
-				setUserTracks(
-					tracks
-						.map(track => track.track)
-						.sort((x, y) => x.artists[0].name.localeCompare(y.artists[0].name))
-				);
+				setUserTracks(massageTracks(tracks.map(track => track.track)));
 			}
 			setLoading(false);
 		}
@@ -138,8 +130,8 @@ function App() {
 				onLogout={() => logout(setIsAuthorized)}
 			></MainMenuBar>
 			{isLoading && (
-				<Dimmer active inverted>
-					<Loader inverted>Loading Tracks...</Loader>
+				<Dimmer active>
+					<Loader>Loading Tracks...</Loader>
 				</Dimmer>
 			)}
 			<Segment basic>
@@ -148,34 +140,52 @@ function App() {
 						{Object.keys(userTracks).length > 0 && (
 							<div>
 								<h2>Total Artists: {Object.keys(userTracks).length}</h2>
-								<Table celled>
-									<Table.Header>
-										<Table.Row>
-											<Table.HeaderCell>Artist</Table.HeaderCell>
-											<Table.HeaderCell>Tracks</Table.HeaderCell>
-											<Table.HeaderCell>Album</Table.HeaderCell>
-										</Table.Row>
-									</Table.Header>
-									<Table.Body>
-										{Object.keys(userTracks).map(artist => (
-											<Table.Row key={artist}>
-												<Table.Cell>{artist}</Table.Cell>
-												<Table.Cell>
-													{userTracks[artist].map(track => (
-														<div key={track.id}>
-															{track.track_number}) {track.name}
-														</div>
-													))}
-												</Table.Cell>
-												<Table.Cell>
-													{userTracks[artist].map(track => (
-														<div key={track.id}>{track.album.name}</div>
-													))}
-												</Table.Cell>
-											</Table.Row>
-										))}
-									</Table.Body>
-								</Table>
+
+								{Object.keys(userTracks).map(artist => (
+									<div key={artist}>
+										<h3>{artist}</h3>
+										<Grid celled>
+											{Object.keys(userTracks[artist]).map(album => (
+												<Grid.Row key={album}>
+													<Grid.Column width={3}>
+														<h4>{album}</h4>
+														<p>
+															{userTracks[artist][album][0].album.release_date}
+														</p>
+														<img
+															src={
+																userTracks[artist][album][0].album.images[1].url
+															}
+															alt={`${album} album artwork`}
+														/>
+													</Grid.Column>
+
+													<Grid.Column width={13}>
+														{userTracks[artist][album]
+															.sort((a, b) => a.track_number - b.track_number)
+															.map(track => (
+																<p key={track.id}>
+																	<Icon
+																		name="play"
+																		onClick={async () => {
+																			await setPlayingTrack(track);
+
+																			const result = await getCurrentlyPlaying();
+																			setCurrentlyPlaying(result);
+																		}}
+																		style={{
+																			cursor: 'pointer'
+																		}}
+																	/>{' '}
+																	{track.track_number}) {track.name}
+																</p>
+															))}
+													</Grid.Column>
+												</Grid.Row>
+											))}
+										</Grid>
+									</div>
+								))}
 							</div>
 						)}
 					</Stage>

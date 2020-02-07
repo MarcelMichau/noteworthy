@@ -1,0 +1,7 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@background : #1b1c1d;
+@headerBackground: #1b1c1d;
+@borderWidth: 1px;
