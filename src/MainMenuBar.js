@@ -9,7 +9,9 @@ const MainMenuBar = ({
 	onLogout
 }) => (
 	<Menu inverted fixed="top">
-		<Menu.Item header active color="green">
+		<Menu.Item header active style={{
+			backgroundColor: '#1DB954'
+		}}>			
 			noteworthy for Spotify
 		</Menu.Item>
 

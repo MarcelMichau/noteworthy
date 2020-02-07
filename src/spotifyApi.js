@@ -5,7 +5,7 @@ export const login = () => {
 	const redirectUri =
 		window.location.hostname === 'marcelmichau.github.io'
 			? 'https://marcelmichau.github.io/noteworthy'
-			: 'http://localhost:3000';
+			: `${window.location.protocol}//${window.location.host}`;
 
 	window.location = `${url}?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=user-library-read user-read-currently-playing user-modify-playback-state`;
 };
@@ -36,7 +36,7 @@ export const getUserDetail = async () => {
 	return data;
 };
 
-export const getUserTracks = async setUserTracks => {
+export const getUserTracks = async () => {
 	console.log('get user artists called');
 
 	const url = 'https://api.spotify.com/v1/me/tracks?limit=50';
@@ -52,8 +52,6 @@ export const getUserTracks = async setUserTracks => {
 	const data = await response.json();
 
 	console.log(data);
-
-	setUserTracks(data);
 
 	return data;
 };

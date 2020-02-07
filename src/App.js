@@ -8,6 +8,7 @@ import {
 	setPlayingTrack
 } from './spotifyApi';
 import MainMenuBar from './MainMenuBar';
+import { Button, Icon } from 'semantic-ui-react';
 
 const authCallback = () => {
 	let hash = window.location.hash.substr(1);
@@ -66,6 +67,15 @@ function App() {
 		if (isAuthorized) fetchUserDetail();
 	}, [isAuthorized]);
 
+	useEffect(() => {
+		async function fetchUserTracks() {
+			const result = await getUserTracks();
+			setUserTracks(result);
+		}
+
+		if (isAuthorized) fetchUserTracks();
+	}, [isAuthorized]);
+
 	return (
 		<div>
 			<MainMenuBar
@@ -79,11 +89,11 @@ function App() {
 				<div>
 					{userTracks.items.length > 0 && (
 						<div>
+							<h2>Recent Tracks</h2>
 							{userTracks.items.map(item => (
 								<div key={item.track.id}>
 									<p>
-										{item.track.artists[0].name} - {item.track.name}:{' '}
-										<button
+										<Button
 											onClick={async () => {
 												await setPlayingTrack(item.track);
 
@@ -91,8 +101,9 @@ function App() {
 												setCurrentlyPlaying(result);
 											}}
 										>
-											Play
-										</button>
+											<Icon name="play" />
+										</Button>
+										{item.track.artists[0].name} - {item.track.name}:{' '}
 									</p>
 								</div>
 							))}
