@@ -18,6 +18,7 @@ import {
 	Loader
 } from 'semantic-ui-react';
 import localforage from 'localforage';
+import { groupBy } from 'lodash';
 
 const authCallback = () => {
 	let hash = window.location.hash.substr(1);
@@ -41,6 +42,22 @@ const authCallback = () => {
 	return result;
 };
 
+const massageTracks = tracks => {
+	const sortedTracks = tracks.sort((x, y) =>
+		x.artists[0].name.localeCompare(y.artists[0].name)
+	);
+
+	const groupedByArtist = groupBy(sortedTracks, value => value.artists[0].name);
+
+	Object.keys(groupedByArtist).forEach(artist => {
+		groupedByArtist[artist] = groupedByArtist[artist].sort((x, y) =>
+			x.album.name.localeCompare(y.album.name)
+		);
+	});
+
+	return groupedByArtist;
+};
+
 function App() {
 	const hasBeenAuthorized = localStorage.getItem('access_token') !== null;
 
@@ -48,7 +65,7 @@ function App() {
 
 	const [userData, setUserData] = useState({});
 
-	const [userTracks, setUserTracks] = useState({ items: 0 });
+	const [userTracks, setUserTracks] = useState({});
 
 	const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
@@ -91,11 +108,7 @@ function App() {
 					localTracks = localTracks.concat(value);
 				});
 
-				localTracks = localTracks.sort((x, y) =>
-					x.artists[0].name.localeCompare(y.artists[0].name)
-				);
-
-				setUserTracks(localTracks);
+				setUserTracks(massageTracks(localTracks));
 			} else {
 				const tracks = await getUserTracks();
 
@@ -132,39 +145,33 @@ function App() {
 			<Segment basic>
 				{isAuthorized && (
 					<Stage>
-						{userTracks.length > 0 && (
+						{Object.keys(userTracks).length > 0 && (
 							<div>
-								<h2>Total Tracks: {userTracks.length}</h2>
+								<h2>Total Artists: {Object.keys(userTracks).length}</h2>
 								<Table celled>
 									<Table.Header>
 										<Table.Row>
-											<Table.HeaderCell></Table.HeaderCell>
-											<Table.HeaderCell>Artists</Table.HeaderCell>
-											<Table.HeaderCell>Track Name</Table.HeaderCell>
+											<Table.HeaderCell>Artist</Table.HeaderCell>
+											<Table.HeaderCell>Tracks</Table.HeaderCell>
 											<Table.HeaderCell>Album</Table.HeaderCell>
 										</Table.Row>
 									</Table.Header>
 									<Table.Body>
-										{userTracks.map(track => (
-											<Table.Row key={track.id}>
+										{Object.keys(userTracks).map(artist => (
+											<Table.Row key={artist}>
+												<Table.Cell>{artist}</Table.Cell>
 												<Table.Cell>
-													<Button
-														primary
-														onClick={async () => {
-															await setPlayingTrack(track);
-
-															const result = await getCurrentlyPlaying();
-															setCurrentlyPlaying(result);
-														}}
-													>
-														<Icon name="play" /> Play
-													</Button>
+													{userTracks[artist].map(track => (
+														<div key={track.id}>
+															{track.track_number}) {track.name}
+														</div>
+													))}
 												</Table.Cell>
 												<Table.Cell>
-													{track.artists.map(artist => artist.name).join(', ')}
+													{userTracks[artist].map(track => (
+														<div key={track.id}>{track.album.name}</div>
+													))}
 												</Table.Cell>
-												<Table.Cell>{track.name}</Table.Cell>
-												<Table.Cell>{track.album.name}</Table.Cell>
 											</Table.Row>
 										))}
 									</Table.Body>
