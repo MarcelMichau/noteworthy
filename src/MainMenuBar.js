@@ -8,7 +8,7 @@ const MainMenuBar = ({
 	onLogin,
 	onLogout
 }) => (
-	<Menu inverted fixed="top">
+	<Menu inverted stackable fixed="top">
 		<Menu.Item
 			header
 			active

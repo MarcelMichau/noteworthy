@@ -9,7 +9,14 @@ import {
 } from './spotifyApi';
 import MainMenuBar from './MainMenuBar';
 import Stage from './Stage';
-import { Grid, Segment, Icon, Dimmer, Loader } from 'semantic-ui-react';
+import {
+	Grid,
+	Segment,
+	Icon,
+	Dimmer,
+	Loader,
+	Divider
+} from 'semantic-ui-react';
 import localforage from 'localforage';
 import { groupBy } from 'lodash';
 
@@ -144,44 +151,51 @@ function App() {
 								{Object.keys(userTracks).map(artist => (
 									<div key={artist}>
 										<h3>{artist}</h3>
-										<Grid celled>
+										<Grid centered doubling>
 											{Object.keys(userTracks[artist]).map(album => (
-												<Grid.Row key={album}>
-													<Grid.Column width={3}>
-														<h4>{album}</h4>
-														<p>
-															{userTracks[artist][album][0].album.release_date}
-														</p>
-														<img
-															src={
-																userTracks[artist][album][0].album.images[1].url
-															}
-															alt={`${album} album artwork`}
-														/>
-													</Grid.Column>
+												<>
+													<Grid.Row key={album}>
+														<Grid.Column width={6}>
+															<img
+																src={
+																	userTracks[artist][album][0].album.images[1]
+																		.url
+																}
+																alt={`${album} album artwork`}
+															/>
+															<h4>{album}</h4>
+															<p>
+																{
+																	userTracks[artist][album][0].album
+																		.release_date
+																}
+															</p>
+														</Grid.Column>
 
-													<Grid.Column width={13}>
-														{userTracks[artist][album]
-															.sort((a, b) => a.track_number - b.track_number)
-															.map(track => (
-																<p key={track.id}>
-																	<Icon
-																		name="play"
-																		onClick={async () => {
-																			await setPlayingTrack(track);
+														<Grid.Column width={10}>
+															{userTracks[artist][album]
+																.sort((a, b) => a.track_number - b.track_number)
+																.map(track => (
+																	<p key={track.id}>
+																		<Icon
+																			name="play"
+																			onClick={async () => {
+																				await setPlayingTrack(track);
 
-																			const result = await getCurrentlyPlaying();
-																			setCurrentlyPlaying(result);
-																		}}
-																		style={{
-																			cursor: 'pointer'
-																		}}
-																	/>{' '}
-																	{track.track_number}) {track.name}
-																</p>
-															))}
-													</Grid.Column>
-												</Grid.Row>
+																				const result = await getCurrentlyPlaying();
+																				setCurrentlyPlaying(result);
+																			}}
+																			style={{
+																				cursor: 'pointer'
+																			}}
+																		/>{' '}
+																		{track.track_number}) {track.name}
+																	</p>
+																))}
+														</Grid.Column>
+													</Grid.Row>
+													<Divider />
+												</>
 											))}
 										</Grid>
 									</div>
