@@ -4,3 +4,9 @@
 
 @pageBackground : #1b1c1d;
 @textColor      : #ffffffe6;
+
+@darkTextColor               : rgba(255, 255, 255, 0.85);
+@mutedTextColor              : rgba(255, 255, 255, 0.6);
+@lightTextColor              : rgba(255, 255, 255, 0.4);
+
+@borderColor               : rgba(224, 226, 228, 0.15);

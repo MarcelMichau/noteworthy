@@ -10,12 +10,13 @@ import {
 import MainMenuBar from './MainMenuBar';
 import Stage from './Stage';
 import {
-	Grid,
 	Segment,
 	Icon,
 	Dimmer,
 	Loader,
-	Divider
+	Item,
+	Divider,
+	Statistic
 } from 'semantic-ui-react';
 import localforage from 'localforage';
 import { groupBy } from 'lodash';
@@ -61,6 +62,14 @@ const massageTracks = tracks => {
 	return groupedByArtist;
 };
 
+function convertDuration(millis) {
+	var minutes = Math.floor(millis / 60000);
+	var seconds = ((millis % 60000) / 1000).toFixed(0);
+	return seconds === 60
+		? minutes + 1 + ':00'
+		: minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+}
+
 function App() {
 	const hasBeenAuthorized = localStorage.getItem('access_token') !== null;
 
@@ -69,6 +78,8 @@ function App() {
 	const [userData, setUserData] = useState({});
 
 	const [userTracks, setUserTracks] = useState({});
+
+	const [trackCount, setTrackCount] = useState(0);
 
 	const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
@@ -111,6 +122,7 @@ function App() {
 					localTracks = localTracks.concat(value);
 				});
 
+				setTrackCount(localTracks.length);
 				setUserTracks(massageTracks(localTracks));
 			} else {
 				const tracks = await getUserTracks();
@@ -119,6 +131,7 @@ function App() {
 					await localforage.setItem(track.track.id, track.track);
 				});
 
+				setTrackCount(tracks.length);
 				setUserTracks(massageTracks(tracks.map(track => track.track)));
 			}
 			setLoading(false);
@@ -146,33 +159,45 @@ function App() {
 					<Stage>
 						{Object.keys(userTracks).length > 0 && (
 							<div>
-								<h2>Total Artists: {Object.keys(userTracks).length}</h2>
+								<Statistic.Group widths="two">
+									<Statistic>
+										<Statistic.Value>
+											{Object.keys(userTracks).length}
+										</Statistic.Value>
+										<Statistic.Label>Artists</Statistic.Label>
+									</Statistic>
+									<Statistic>
+										<Statistic.Value>{trackCount}</Statistic.Value>
+										<Statistic.Label>Tracks</Statistic.Label>
+									</Statistic>
+								</Statistic.Group>
+
+								<Divider></Divider>
 
 								{Object.keys(userTracks).map(artist => (
 									<div key={artist}>
 										<h3>{artist}</h3>
-										<Grid centered doubling>
+										<Item.Group divided>
 											{Object.keys(userTracks[artist]).map(album => (
-												<>
-													<Grid.Row key={album}>
-														<Grid.Column width={6}>
-															<img
-																src={
-																	userTracks[artist][album][0].album.images[1]
-																		.url
-																}
-																alt={`${album} album artwork`}
-															/>
-															<h4>{album}</h4>
-															<p>
-																{
-																	userTracks[artist][album][0].album
-																		.release_date
-																}
-															</p>
-														</Grid.Column>
+												<Item key={album}>
+													<div className="image">
+														<img
+															loading="lazy"
+															width="300"
+															height="300"
+															src={
+																userTracks[artist][album][0].album.images[1].url
+															}
+															alt={album}
+														/>
+													</div>
 
-														<Grid.Column width={10}>
+													<Item.Content>
+														<Item.Header as="a">{album}</Item.Header>
+														<Item.Meta>
+															{userTracks[artist][album][0].album.release_date}
+														</Item.Meta>
+														<Item.Description>
 															{userTracks[artist][album]
 																.sort((a, b) => a.track_number - b.track_number)
 																.map(track => (
@@ -189,15 +214,16 @@ function App() {
 																				cursor: 'pointer'
 																			}}
 																		/>{' '}
-																		{track.track_number}) {track.name}
+																		{track.track_number}) {track.name} -{' '}
+																		{convertDuration(track.duration_ms)}
 																	</p>
 																))}
-														</Grid.Column>
-													</Grid.Row>
-													<Divider />
-												</>
+														</Item.Description>
+													</Item.Content>
+												</Item>
 											))}
-										</Grid>
+										</Item.Group>
+										<Divider></Divider>
 									</div>
 								))}
 							</div>
