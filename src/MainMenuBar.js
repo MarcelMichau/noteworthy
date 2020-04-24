@@ -1,19 +1,13 @@
 import React from 'react';
-import { Icon, Menu, Image, Button } from 'semantic-ui-react';
+import { Icon, Menu, Button } from 'semantic-ui-react';
 
-const MainMenuBar = ({
-	isAuthorized,
-	userData,
-	currentlyPlaying,
-	onLogin,
-	onLogout
-}) => (
+const MainMenuBar = ({ isAuthorized, currentlyPlaying, onLogin, onLogout }) => (
 	<Menu inverted stackable fixed="top">
 		<Menu.Item
 			header
 			active
 			style={{
-				backgroundColor: '#1DB954'
+				backgroundColor: '#1DB954',
 			}}
 		>
 			noteworthy for Spotify
@@ -26,12 +20,6 @@ const MainMenuBar = ({
 						<Menu.Item>
 							<Icon name="play" /> {currentlyPlaying.item.artists[0].name} -{' '}
 							{currentlyPlaying.item.name}
-						</Menu.Item>
-					)}
-					{userData.id && (
-						<Menu.Item>
-							<Image src={userData.images[0].url} size="mini" circular />
-							{userData.display_name}
 						</Menu.Item>
 					)}
 				</>
