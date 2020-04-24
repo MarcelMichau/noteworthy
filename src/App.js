@@ -22,6 +22,7 @@ import {
 	Divider,
 	Statistic,
 	Header,
+	Label,
 } from 'semantic-ui-react';
 import localforage from 'localforage';
 import { groupBy } from 'lodash';
@@ -218,7 +219,9 @@ function App() {
 											name={artist}
 											active={selectedArtist === artist}
 											onClick={onArtistClick}
-										></Menu.Item>
+										>
+											{artist}
+										</Menu.Item>
 									))
 							: Object.keys(userTracks).map((artist) => (
 									<Menu.Item
@@ -226,7 +229,9 @@ function App() {
 										name={artist}
 										active={selectedArtist === artist}
 										onClick={onArtistClick}
-									></Menu.Item>
+									>
+										{artist}
+									</Menu.Item>
 							  ))}
 					</Menu>
 				</div>
@@ -255,6 +260,7 @@ function App() {
 									{selectedArtist !== '' ? (
 										<div>
 											<h1>{selectedArtist}</h1>
+											<Divider></Divider>
 											<div key={selectedArtist}>
 												<Item.Group divided>
 													{Object.keys(userTracks[selectedArtist]).map(
@@ -288,7 +294,10 @@ function App() {
 																					a.track_number - b.track_number
 																			)
 																			.map((track) => (
-																				<p key={track.id}>
+																				<div
+																					key={track.id}
+																					style={{ paddingBottom: '5px' }}
+																				>
 																					<Icon
 																						name="play"
 																						onClick={async () => {
@@ -300,10 +309,19 @@ function App() {
 																						style={{
 																							cursor: 'pointer',
 																						}}
+																						color={
+																							track.id ===
+																							currentlyPlaying.item.id
+																								? 'green'
+																								: 'grey'
+																						}
 																					/>{' '}
 																					{track.track_number}) {track.name} -{' '}
-																					{convertDuration(track.duration_ms)}
-																				</p>
+																					{convertDuration(track.duration_ms)}{' '}
+																					{track.explicit && (
+																						<Label color="red">Explicit</Label>
+																					)}
+																				</div>
 																			))}
 																	</Item.Description>
 																</Item.Content>
