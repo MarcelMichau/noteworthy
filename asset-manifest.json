@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/noteworthy/static/js/main.7d284f31.chunk.js",
-    "main.js.map": "/noteworthy/static/js/main.7d284f31.chunk.js.map",
+    "main.js": "/noteworthy/static/js/main.ae64a06d.chunk.js",
+    "main.js.map": "/noteworthy/static/js/main.ae64a06d.chunk.js.map",
     "runtime-main.js": "/noteworthy/static/js/runtime-main.a1326f64.js",
     "runtime-main.js.map": "/noteworthy/static/js/runtime-main.a1326f64.js.map",
     "static/css/2.9f8d8763.chunk.css": "/noteworthy/static/css/2.9f8d8763.chunk.css",
     "static/js/2.123bccd1.chunk.js": "/noteworthy/static/js/2.123bccd1.chunk.js",
     "static/js/2.123bccd1.chunk.js.map": "/noteworthy/static/js/2.123bccd1.chunk.js.map",
     "index.html": "/noteworthy/index.html",
-    "precache-manifest.d57b086ac90bc4de24a6b6f3bdc224ce.js": "/noteworthy/precache-manifest.d57b086ac90bc4de24a6b6f3bdc224ce.js",
+    "precache-manifest.2b16eaf6fb7c7fb7d1bbb1bdae29d647.js": "/noteworthy/precache-manifest.2b16eaf6fb7c7fb7d1bbb1bdae29d647.js",
     "service-worker.js": "/noteworthy/service-worker.js",
     "static/css/2.9f8d8763.chunk.css.map": "/noteworthy/static/css/2.9f8d8763.chunk.css.map",
     "static/js/2.123bccd1.chunk.js.LICENSE.txt": "/noteworthy/static/js/2.123bccd1.chunk.js.LICENSE.txt",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.a1326f64.js",
     "static/css/2.9f8d8763.chunk.css",
     "static/js/2.123bccd1.chunk.js",
-    "static/js/main.7d284f31.chunk.js"
+    "static/js/main.ae64a06d.chunk.js"
   ]
 }
